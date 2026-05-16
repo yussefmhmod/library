@@ -1,85 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>My Borrowed Books</title>
     <link rel="stylesheet" href="style.css">
-<meta charset="UTF-8">
-<title>User - Borrowed Books</title>
-
-<style>
-body{
-    background-color:white;
-    margin:0;
-    font-family: Arial;
-}
-
-table{
-    text-align:center;
-    border-collapse: collapse;
-}
-
-th, td{
-    padding:10px;
-}
-</style>
-
-<script defer src="userBB.js"></script>
+    <style>
+        .section-title {
+            text-align: center;
+            color: rgb(179, 125, 32);
+            font-family: 'Pixel1', monospace;
+            margin: 20px 0 5px;
+        }
+        .borrowed  { color: #f55; font-weight: bold; }
+        .available { color: #5f5; font-weight: bold; }
+        .empty-row td { color: #aaa; font-style: italic; }
+    </style>
 </head>
-
 <body background="images/library.png">
 
+<!-- ── Navigation ──────────────────────────────────────────────────── -->
+<nav class="navClass">
+    <hr>
+    <table class="navClass" width="100%">
+        <caption>navigation bar</caption>
+        <thead>
+            <tr>
+                <td><a href="userNavBar.html"><h2>Home</h2></a></td>
+                <td><a href="userBB.html"><h2>My Borrowed Books</h2></a></td>
+                <td><a href="userSearch.html"><h2>Search</h2></a></td>
+                <td><h2><span id="welcomeMsg">| Welcome</span></h2></td>
+                <!-- FIX: call logout() instead of just redirecting -->
+                <td><a href="#" onclick="logout()"><h2>Sign Out</h2></a></td>
+            </tr>
+        </thead>
+    </table>
+    <hr>
+</nav>
 
-
-<!-- ===== Navigation ===== -->
-<nav class="navClass" >
-        <hr>
-        <table class="navClass" width="100%">
-            <caption>navigation bar</caption>
-            <thead>
-                <tr>
-                    <td><a href="userNavBar.html"><h2>Home</h2></a></td>
-                    <td><a href="userBB.html"><h2>My Borrowed Books</h2></a></td>
-                    <td><a href="userSearch.html"><h2>Search</h2></a></td>
-                    <td><h2><span id="welcomeMsg">| Welcome</span></h2></td>
-                    <td><a href="#" onclick="logout()"><h2>Sign Out</h2></a></td>
-                </tr>
-            </thead>
-        </table>
-        <hr>
-        </nav>
-       <style>.navClass {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}</style>
-<!-- ===== Logo ===== -->
+<!-- ── Logo ─────────────────────────────────────────────────────────── -->
 <center>
-    <img src="images/BookStoreLogo3.png" width="700">
+    <img src="images/BookStoreLogo3.png" width="700" alt="Book Store">
 </center>
-<!-- ===== Title ===== -->
-<table border="1" bgcolor="grey" width="100%">
-    <tr>
-        <td><big>My Borrowed Books</big></td>
-    </tr>
-</table>
 
-<!-- ===== Books Table ===== -->
-<table border="1" bgcolor="white" width="100%" id="booksTable">
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- Section 1 – Currently Borrowed                                     -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 class="section-title">📚 Currently Borrowed</h2>
+
+<table border="1" bgcolor="grey" width="100%" id="activeBorrowsTable">
     <thead>
         <tr>
             <th>Title</th>
             <th>Author</th>
             <th>Genre</th>
-            <th>Borrow Date</th>
-            <th>Return Date</th>
+            <th>Borrowed On</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
-
     <tbody>
-        <!-- JS fills this -->
+        <!-- filled by userBB.js -->
     </tbody>
 </table>
 
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- Section 2 – Borrow History                                         -->
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<h2 class="section-title">🕓 Borrow History</h2>
+
+<table border="1" bgcolor="#555" width="100%" id="historyTable">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Borrowed On</th>
+            <th>Returned On</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- filled by userBB.js -->
+    </tbody>
+</table>
+
+<br>
+
+<script src="userBB.js"></script>
 </body>
 </html>

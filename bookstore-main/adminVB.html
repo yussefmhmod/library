@@ -1,73 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin - View Book</title>
+<title>Admin – View Book</title>
 <link rel="stylesheet" href="style.css">
+<style>
+.admin-section {
+    margin: 20px 10px;
+    border: 2px solid #555;
+    padding: 10px;
+    background: #1b1a1a;
+}
+.admin-section h3 {
+    color: rgb(179,125,32);
+    font-family: 'Pixel1', monospace;
+    margin-top: 0;
+}
+#editPanel {
+    display: none;
+    background: #2a2a2a;
+    border: 2px solid gold;
+    padding: 15px;
+    margin: 15px 10px;
+}
+#editPanel input, #editPanel textarea {
+    width: 90%;
+    margin-bottom: 8px;
+    display: block;
+}
+.danger { background: #600; color: #f88; }
+.qty-label { color: #0f0; font-family: monospace; font-size: 1.1em; }
+</style>
 <script defer src="adminVB.js"></script>
 </head>
-
 <body background="images/library.png">
 
+<!-- ── Navigation ─────────────────────────────────────────────── -->
+<nav class="navClass">
+    <hr>
+    <table class="navClass" width="100%">
+        <caption>navigation bar</caption>
+        <thead>
+            <tr>
+                <td><a href="adminHP.html"><h2>Home</h2></a></td>
+                <td><a href="adminBM.html"><h2>Books</h2></a></td>
+                <td><a href="search.html"><h2>Search</h2></a></td>
+                <td><a href="add.html"><h2>Add a Book</h2></a></td>
+                <td><a href="login.html"><h2>Sign Out</h2></a></td>
+            </tr>
+        </thead>
+    </table>
+    <hr>
+</nav>
 
-
-     <!-- =========navigation bar ================= -->
-
-
-
-    <nav class="navClass">
-        <hr>
-
-        <table class="navClass"  width="100%">
-            <caption> navigation bar</caption>
-
-            <thead>
-                <tr>
-                    <td><a href="adminHP.html"><h2>Home</h2></a></td>
-                    <td><a href="adminBM.html" title="click to go"><h2>Books</h2> </a> </td>
-                    <td ><a href="search.html" title="click to go"><h2>s]Search</h2> </a> </td>
-                    <td><a href="add.html" title="click to go"><h2>Add a Book</h2> </a> </td>
-                    <td><a href="" title="click to go"><h2>Profile</h2> </a> </td>
-                    <td><a href="login.html" title="click to go"><h2>Sign out</h2> </a> </td>
-
-                </tr>
-            </thead>
-
-        </table>
-        <hr>
-     <style> .navClass {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}</style>
-
-    </nav>
-<!-- ===== Logo ===== -->
+<!-- ── Logo ──────────────────────────────────────────────────────── -->
 <center>
-<img src="images/BookStoreLogo3.png" width="700">
+    <img src="images/BookStoreLogo3.png" width="700" alt="Book Store">
 </center>
-<!-- ===== Book Details ===== -->
+
+<!-- ── Book Details ──────────────────────────────────────────────── -->
 <table class="book-table" bgcolor="grey">
 <tr>
+    <td class="img-cell" align="center">
+        <img id="bookImage" src="" width="300" alt="Book cover">
+    </td>
+    <td class="book-box">
+        <h1 id="title"></h1>
+        <h3 id="author"></h3>
+        <h3 id="genre"></h3>
+        <h3 id="pages"></h3>
+        <p  id="description"></p>
+        <h3>Status: <span id="status"></span></h3>
+        <p class="qty-label"><span id="quantity"></span></p>
 
-<td class="img-cell">
-    <img id="bookImage" src="" width="300">
-</td>
-
-<td class="book-box">
-    <h1 id="title"></h1>
-    <h3 id="author"></h3>
-    <h3 id="genre"></h3>
-    <h3 id="pages"></h3>
-    <h3 id="price"></h3>
-    <p id="description"></p>
-    <h3>Status: <span id="status"></span></h3>
-
-    <button id="toggleBtn" onclick="toggleAvailability()">Mark Unavailable</button>
-    <button class="danger" onclick="deleteBook()">Delete Book</button>
-</td>
-
+        <button id="toggleBtn"  onclick="toggleAvailability()">Mark Unavailable</button>
+        <button                 onclick="showEditPanel()">✏️ Edit Book</button>
+        <button class="danger"  onclick="deleteBook()">🗑 Delete Book</button>
+    </td>
 </tr>
 </table>
+
+<!-- ── Inline Edit Panel ─────────────────────────────────────────── -->
+<div id="editPanel">
+    <h3 style="color:gold;">Edit Book</h3>
+    <input  id="editTitle"  type="text"   placeholder="Title">
+    <input  id="editAuthor" type="text"   placeholder="Author">
+    <input  id="editPrice"  type="number" placeholder="Price" step="0.01">
+    <input  id="editQty"    type="number" placeholder="Quantity" min="0">
+    <textarea id="editDesc" rows="3"      placeholder="Description"></textarea>
+    <button onclick="saveEdits()">💾 Save Changes</button>
+    <button onclick="document.getElementById('editPanel').style.display='none'">Cancel</button>
+</div>
+
+<!-- ── Currently Borrowed By ─────────────────────────────────────── -->
+<div class="admin-section">
+    <h3>👤 Currently Borrowed By</h3>
+    <table id="currentBorrowersTable" border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Borrowed On</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<!-- ── Borrow History ─────────────────────────────────────────────── -->
+<div class="admin-section">
+    <h3>🕓 Borrow History</h3>
+    <table id="borrowHistoryTable" border="1" width="100%">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Borrowed On</th>
+                <th>Returned On</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 </body>
 </html>

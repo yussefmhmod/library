@@ -2,71 +2,131 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book-Store</title>
+    <title>Admin – Home</title>
     <link rel="stylesheet" href="style.css">
-
+    <style>
+        /* ── stats bar ── */
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            padding: 16px;
+            background: #111;
+            border: 2px solid #444;
+            margin: 10px;
+        }
+        .stat-card {
+            background: #222;
+            border: 2px solid rgb(179,125,32);
+            padding: 14px 24px;
+            text-align: center;
+            font-family: 'Pixel1', monospace;
+            min-width: 130px;
+        }
+        .stat-card .stat-num {
+            font-size: 2em;
+            color: #0f0;
+            display: block;
+        }
+        .stat-card .stat-label {
+            font-size: 0.75em;
+            color: #aaa;
+        }
+        /* ── recent activity ── */
+        .recent-section {
+            margin: 10px;
+            padding: 10px;
+            background: #1b1a1a;
+            border: 2px solid #444;
+        }
+        .recent-section h3 {
+            color: rgb(179,125,32);
+            font-family: 'Pixel1', monospace;
+        }
+        .available { color: #5f5; font-weight: bold; }
+        .borrowed  { color: #f55; font-weight: bold; }
+    </style>
 </head>
 <body background="images/library.png">
-    
-    <audio src="sounds/buttonclick.mp3"></audio>
-    
-     <!-- =========navigation bar ================= -->
 
+<!-- ── Navigation ─────────────────────────────────────────────── -->
+<nav class="navClass">
+    <hr>
+    <table class="navClass" width="100%">
+        <caption>navigation bar</caption>
+        <thead>
+            <tr>
+                <td><a href="adminHP.html"><h2>Home</h2></a></td>
+                <td><a href="adminBM.html"><h2>Books</h2></a></td>
+                <td><a href="search.html"><h2>Search</h2></a></td>
+                <td><a href="add.html"><h2>Add a Book</h2></a></td>
+                <td><a href="login.html"><h2>Sign Out</h2></a></td>
+            </tr>
+        </thead>
+    </table>
+    <hr>
+</nav>
 
+<!-- ── Logo ──────────────────────────────────────────────────────── -->
+<div>
+    <center><img src="images/BookStoreLogo3.png" alt="Book Store" width="600"></center>
+</div>
 
-    <nav class="navClass">
-        <hr>
-
-        <table class="navClass"  width="100%">
-            <caption> navigation bar</caption>
-
-            <thead>
-                <tr>
-                    <td><a href="adminHP.html"><h2>Home</h2></a></td>
-                    <td><a href="adminBM.html" title="click to go"><h2>Books</h2> </a> </td>
-                    <td ><a href="search.html" title="click to go"><h2>Search</h2> </a> </td>
-                    <td><a href="add.html" title="click to go"><h2>Add a Book</h2> </a> </td>
-                    <td><a href="" title="click to go"><h2>Profile</h2> </a> </td>
-                    <td><a href="login.html" title="click to go"><h2>Sign out</h2> </a> </td>
-
-                </tr>
-            </thead>
-
-        </table>
-        <hr>
-     <style> .navClass {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}</style>
-
-    </nav>
-   
-          <!-- =========Page title ================= -->
-    <div>
-
-        <center> <img src="images/BookStoreLogo3.png" alt="" width="600"></center>
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- Stats Dashboard                                                -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="stats-bar">
+    <div class="stat-card">
+        <span class="stat-num" id="statTotal">—</span>
+        <span class="stat-label">Total Books</span>
     </div>
-<!-- =========quick search ================= -->
-    <h1 align="center">
+    <div class="stat-card">
+        <span class="stat-num" id="statAvail">—</span>
+        <span class="stat-label">Available</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-num" id="statUnavail">—</span>
+        <span class="stat-label">Unavailable</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-num" id="statBorrowed">—</span>
+        <span class="stat-label">Active Borrows</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-num" id="statUsers">—</span>
+        <span class="stat-label">Registered Users</span>
+    </div>
+</div>
 
-            <hr>
+<!-- ── Recent Activity ───────────────────────────────────────────── -->
+<div class="recent-section">
+    <h3>📋 Recent Borrow Activity</h3>
+    <table id="recentTable" border="1" width="100%">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Book</th>
+                <th>Borrowed On</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-            <form action="adminHP.html" method="get">
-                <input type="text" name="query" placeholder="Quick search..." size="60">
-                <button onclick="document.getElementById('s').play()" type="submit">Search</button>
-            </form>
+<!-- ── Quick Search ──────────────────────────────────────────────── -->
+<h1 align="center">
+    <hr>
+    <form action="search.html" method="get">
+        <input type="text" name="query" placeholder="Quick search..." size="60">
+        <button type="submit">Search</button>
+    </form>
+    <hr>
+</h1>
 
-            <hr>
-        </h1>
-    
-    
+<!-- ── Book Shelf ────────────────────────────────────────────────── -->
+<div id="booksShelf"></div>
 
-
-     
-    <!--======books Div ======  -->
-    <div id = booksShelf></div>
-    <script src="scrpt.js"></script>
+<script src="adminHP.js"></script>
 </body>
 </html>

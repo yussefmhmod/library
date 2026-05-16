@@ -1,81 +1,174 @@
-window.addEventListener("DOMContentLoaded", function () {
+// ─── helpers ──────────────────────────────────────────────────────────────────
 
-    const defaultBooks = [
-        {
-            id: 0,
-            title: "The Metamorphosis",
-            author: "Franz Kafka",
-            genre: "Philosophical Novel",
-            borrowDate: "1 May",
-            returnDate: "15 May",
-            status: "Borrowed",
-            image: "images/KafkaCover.jpg",
-            pages: 70,
-            price: 50,
-            description: "A story about a man who wakes up transformed into a giant insect."
-        },
-        {
-            id: 1,
-            title: "The Origin of Species",
-            author: "Charles Darwin",
-            genre: "Biology",
-            borrowDate: "3 May",
-            returnDate: "17 May",
-            status: "Available",
-            image: "images/TheOriginOfSCover.jpg",
-            pages: 465,
-            price: 200,
-            description: "Darwin's groundbreaking work on evolution by natural selection."
-        }
-    ];
+const API = "http://127.0.0.1:8000";
 
-    function loadBooks() {
-        const stored = JSON.parse(localStorage.getItem("books"));
-        if (!stored || stored.some(b => b.pages === undefined || b.image === undefined)) {
-            localStorage.setItem("books", JSON.stringify(defaultBooks));
-            return JSON.parse(JSON.stringify(defaultBooks));
-        }
-        return stored;
+async function apiFetch(path, options = {}) {
+    const res = await fetch(API + path, { credentials: "include", ...options });
+    if (!res.ok) throw Object.assign(new Error("API error"), { status: res.status });
+    return res.json();
+}
+
+let currentBook = null;
+let bookId      = null;
+
+// ─── render ───────────────────────────────────────────────────────────────────
+
+function renderBook(book) {
+    currentBook = book;
+
+    document.getElementById("title").textContent       = book.title;
+    document.getElementById("author").textContent      = "Author: "      + book.author;
+    document.getElementById("genre").textContent       = "Genre: "       + book.genre;
+    document.getElementById("pages").textContent       = "Price: "       + book.price  + " L.E";
+    document.getElementById("description").textContent = book.description;
+    document.getElementById("status").textContent      = book.status;
+    document.getElementById("quantity").textContent    = "Copies: "      + book.quantity;
+
+    const img = document.getElementById("bookImage");
+    if (img) img.src = book.image || "images/placeholder.png";
+
+    // toggle button label
+    const toggleBtn = document.getElementById("toggleBtn");
+    if (toggleBtn) {
+        toggleBtn.textContent =
+            book.status === "Available" ? "Mark Unavailable" : "Mark Available";
     }
 
-    let books = loadBooks();
-
-    const params = new URLSearchParams(window.location.search);
-    const bookId = parseInt(params.get("id"));
-    const bookIndex = books.findIndex(b => b.id === bookId);
-    let book = books[bookIndex];
-
-    function loadBook() {
-        if (!book) return;
-        document.getElementById("title").textContent = book.title;
-        document.getElementById("author").textContent = "Author: " + book.author;
-        document.getElementById("genre").textContent = "Genre: " + book.genre;
-        document.getElementById("pages").textContent = "Pages: " + book.pages;
-        document.getElementById("price").textContent = "Price: " + book.price;
-        document.getElementById("description").textContent = book.description;
-        document.getElementById("status").textContent = book.status;
-        document.getElementById("bookImage").src = book.image;
-
-        const toggleBtn = document.getElementById("toggleBtn");
-        toggleBtn.textContent = book.status === "Available" ? "Mark Unavailable" : "Mark Available";
+    // ── current borrowers table ──────────────────────────────────────────────
+    const cbody = document.querySelector("#currentBorrowersTable tbody");
+    if (cbody) {
+        cbody.innerHTML = "";
+        if (!book.current_borrowers.length) {
+            cbody.innerHTML =
+                `<tr><td colspan="3" style="text-align:center; color:#aaa;">
+                 Nobody is borrowing this book right now.</td></tr>`;
+        } else {
+            book.current_borrowers.forEach(b => {
+                cbody.innerHTML += `
+                <tr>
+                    <td>${b.username}</td>
+                    <td>${b.borrow_date}</td>
+                    <td>
+                        <button onclick="forceReturn(${b.borrow_id}, '${b.username}')">
+                            Force Return
+                        </button>
+                    </td>
+                </tr>`;
+            });
+        }
     }
 
-    window.toggleAvailability = function () {
-        book.status = book.status === "Available" ? "Unavailable" : "Available";
-        books[bookIndex] = book;
-        localStorage.setItem("books", JSON.stringify(books));
+    // ── history table ────────────────────────────────────────────────────────
+    const hbody = document.querySelector("#borrowHistoryTable tbody");
+    if (hbody) {
+        hbody.innerHTML = "";
+        if (!book.borrow_history.length) {
+            hbody.innerHTML =
+                `<tr><td colspan="3" style="text-align:center; color:#aaa;">
+                 No history yet.</td></tr>`;
+        } else {
+            book.borrow_history.forEach(h => {
+                hbody.innerHTML += `
+                <tr>
+                    <td>${h.username}</td>
+                    <td>${h.borrow_date}</td>
+                    <td>${h.return_date ?? "—"}</td>
+                </tr>`;
+            });
+        }
+    }
+}
+
+// ─── actions ──────────────────────────────────────────────────────────────────
+
+async function toggleAvailability() {
+    if (!currentBook || !bookId) return;
+    const newStatus =
+        currentBook.status === "Available" ? "Unavailable" : "Available";
+    try {
+        await apiFetch(`/books/edit/${bookId}/`, {
+            method:  "PUT",
+            headers: { "Content-Type": "application/json" },
+            body:    JSON.stringify({ status: newStatus }),
+        });
         loadBook();
-    };
+    } catch {
+        alert("Failed to update status.");
+    }
+}
 
-    window.deleteBook = function () {
-        const confirmDelete = confirm("Are you sure you want to delete this book?");
-        if (confirmDelete) {
-            books.splice(bookIndex, 1);
-            localStorage.setItem("books", JSON.stringify(books));
-            alert("Book deleted.");
-            window.location.href = "adminBB.html";
-        }
-    };
+async function deleteBook() {
+    if (!bookId) return;
+    if (!confirm("Permanently delete this book and all its borrow records?")) return;
+    try {
+        await apiFetch(`/books/delete/${bookId}/`, { method: "DELETE" });
+        alert("Book deleted.");
+        window.location.href = "adminBM.html";
+    } catch {
+        alert("Delete failed.");
+    }
+}
 
-    loadBook();
-});
+async function forceReturn(borrowId, username) {
+    // Admin force-returns a specific borrow by marking it returned on the backend.
+    // This requires a small admin endpoint – see the suggestion section in the docs.
+    alert(`Force-return for ${username} is not yet implemented on the backend.\n` +
+          `Add: POST /books/admin-return/<borrow_id>/`);
+}
+
+// ─── inline edit ──────────────────────────────────────────────────────────────
+
+async function saveEdits() {
+    if (!bookId) return;
+    const title  = document.getElementById("editTitle").value.trim();
+    const author = document.getElementById("editAuthor").value.trim();
+    const price  = parseFloat(document.getElementById("editPrice").value);
+    const qty    = parseInt(document.getElementById("editQty").value, 10);
+    const desc   = document.getElementById("editDesc").value.trim();
+
+    if (!title || !author || isNaN(price) || isNaN(qty)) {
+        alert("Please fill in all fields correctly.");
+        return;
+    }
+
+    try {
+        await apiFetch(`/books/edit/${bookId}/`, {
+            method:  "PUT",
+            headers: { "Content-Type": "application/json" },
+            body:    JSON.stringify({ title, author, price, quantity: qty, description: desc }),
+        });
+        alert("Book updated successfully.");
+        loadBook();
+        document.getElementById("editPanel").style.display = "none";
+    } catch {
+        alert("Update failed.");
+    }
+}
+
+function showEditPanel() {
+    if (!currentBook) return;
+    document.getElementById("editTitle").value  = currentBook.title;
+    document.getElementById("editAuthor").value = currentBook.author;
+    document.getElementById("editPrice").value  = currentBook.price;
+    document.getElementById("editQty").value    = currentBook.quantity;
+    document.getElementById("editDesc").value   = currentBook.description;
+    document.getElementById("editPanel").style.display = "block";
+}
+
+// ─── load ─────────────────────────────────────────────────────────────────────
+
+async function loadBook() {
+    bookId = new URLSearchParams(window.location.search).get("id");
+    if (!bookId) {
+        document.getElementById("title").textContent = "No book selected.";
+        return;
+    }
+    try {
+        const book = await apiFetch(`/books/admin-detail/${bookId}/`);
+        renderBook(book);
+    } catch {
+        document.getElementById("title").textContent = "Failed to load book.";
+    }
+}
+
+window.addEventListener("DOMContentLoaded", loadBook);
