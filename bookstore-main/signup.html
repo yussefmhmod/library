@@ -11,17 +11,27 @@
         <h1 align="center">
             <br><br>
                 <form class="signupClass" onsubmit="return valid_sign()">
-                    <input id="name" type="text" placeholder="Name">
-                    <input id="email" type="email" placeholder="E-Mail">
-                    <input id="pass" type="password" placeholder="Password">
-                    <input type="checkbox" onclick="showpass('pass')"> <label>Show</label>
-                    <input id="conf_pass" type="password" placeholder="Confirm Password">
-                    <input type="checkbox" onclick="showpass('conf_pass')"> <label>Show</label>
-                    <input id="admin" type="checkbox">
-                    <label>Admin?</label>
-                    <button type="submit">signup</button>
-                    <td><a href="login.html" title="click to go"><font color="cyan"><h2>Login</h2></font></a></td>
-                </form>
+    <input id="name" type="text" placeholder="Username">
+    <div id="name-error" style="color:red; font-size:12px;"></div>
+
+    <input id="email" type="email" placeholder="E-Mail">
+    <div id="email-error" style="color:red; font-size:12px;"></div>
+
+    <input id="pass" type="password" placeholder="Password">
+    <input type="checkbox" onclick="showpass('pass')"> <label>Show</label>
+    <div id="pass-error" style="color:red; font-size:12px;"></div>
+
+    <input id="conf_pass" type="password" placeholder="Confirm Password">
+    <input type="checkbox" onclick="showpass('conf_pass')"> <label>Show</label>
+    <div id="conf-error" style="color:red; font-size:12px;"></div>
+
+    <input id="admin" type="checkbox">
+    <label>Admin?</label>
+    <div id="general-error" style="color:red; font-size:12px;"></div>
+
+    <button type="submit">signup</button>
+    <td><a href="login.html"><font color="cyan"><h2>Login</h2></font></a></td>
+</form>
         </h1>
     </div>
     <style> body {

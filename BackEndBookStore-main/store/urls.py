@@ -8,4 +8,5 @@ urlpatterns = [ #add the function path
     path("delete/<int:id>/", views.delete_book),
     path("edit/<int:id>/", views.edit_book),
     path("books/search/", views.get_books_Search),
+    
 ]

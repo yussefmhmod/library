@@ -1,21 +1,34 @@
+
+function clearErrors(){
+    document.getElementById('username-error').innerText = '';
+    document.getElementById('pass-error').innerText = '';
+    document.getElementById('general-error').innerText = '';
+}
+
 function valid_log(){
+     clearErrors();
 let username=document.getElementById('em').value;
 let password=document.getElementById('pas').value;
+    let valid = true;
 
-
-    if(username==""||password==""){
-        alert("Fill the required data!");
-        return false;
+ if(username == ""){
+        document.getElementById('username-error').innerText = "Username is required!";
+        valid = false;
+    }
+    if(password == ""){
+        document.getElementById('pass-error').innerText = "Password is required!";
+        valid = false;
+    } else if(password.length < 6){
+        document.getElementById('pass-error').innerText = "At least 6 characters!";
+        valid = false;
     }
 
-     else if(password.length<6){
-        alert("password must be at least 6 characters");
-        return false;
-    }
+    if(!valid) return false;
+
 
     fetch('http://127.0.0.1:8000/users/login/' ,{
        method:'POST',
-       credentials: "include", 
+      credentials: "include",
        headers:{
         'Content-Type' : 'application/json',
        },
@@ -29,12 +42,12 @@ let password=document.getElementById('pas').value;
     .then(data=> {
         if(data.message){
               if(data.is_admin){
-                alert("logged in successfully!");
-                window.location.href = "adminHP.html"; 
+                    alert("logged in successfully!");
+            window.location.href = "adminHP.html"; 
               }
              else{
                  alert("logged in successfully!");
-                 window.location.href = "userNavBar.html";
+            window.location.href = "userNavBar.html";
             }
         }
         else{

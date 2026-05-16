@@ -11,10 +11,14 @@
     <br><br><br><br>
     <h1>Login</h1> 
         <h1 align="center">
-            <input id="em" type="text" placeholder="Username"><br><br> 
-            <input id="pas" type="password" placeholder="Password"><br><br>
+            <input id="em" type="text" placeholder="Username">
+            <div id="username-error" style="color:red; font-size:12px;"></div>
+
+            <input id="pas" type="password" placeholder="Password">
+            <div id="pass-error" style="color:red; font-size:12px;"></div>
+
             <input id="check" type="checkbox" onclick="showpass()"> <label>Show</label>
-            <br><br> 
+            <div id="general-error" style="color:red; font-size:12px;"></div>
         </h1>
         <h2>
             <button type="submit">Login</button>

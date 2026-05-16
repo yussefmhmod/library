@@ -1,45 +1,17 @@
+
+ let preQuery ; 
+ let books ;
 window.onload = async function () {
     const res = await fetch("http://127.0.0.1:8000/books/");
-    const books = await res.json();
-
+    books = await res.json();
     const params = new URLSearchParams(window.location.search);
-    const preQuery = params.get("query");
+    preQuery = params.get("query");
+    
+    displayResults(books);
+
+}
 
     const form = document.querySelector("form");
-    const table = document.getElementById("booksTable");
-
-    function displayResults(results) {
-        let html = `
-            <tr>
-                <th>ID</th>
-                <th>Book Name</th>
-                <th>Author</th>
-                <th>Category</th>
-                <th>Status</th>
-                <th>Link</th>
-            </tr>
-        `;
-
-        if (results.length === 0) {
-            html += `<tr><td colspan="6"><center>No results found</center></td></tr>`;
-        } else {
-            results.forEach(book => {
-                html += `
-                    <tr>
-                        <td>${book.id}</td>
-                        <td>${book.title}</td>
-                        <td>${book.author}</td>
-                        <td>${book.genre}</td>
-                        <td>${book.status}</td>
-                        <td><a href="userVB.html?id=${book.id}"><font color="blue">View</font></a></td>
-                    </tr>
-                `;
-            });
-        }
-
-        table.innerHTML = html;
-    }
-
     // if arriving from quick search on home page, pre-fill and run search
     if (preQuery) {
         const input = form.querySelector("input");
@@ -49,14 +21,14 @@ window.onload = async function () {
             (book.author && book.author.toLowerCase().includes(preQuery.toLowerCase())) ||
             (book.genre && book.genre.toLowerCase().includes(preQuery.toLowerCase()))
         );
-        displayResults(filtered);
+        displayResults(books);
     } else {
         displayResults(books);
     }
 
    const searchInput = form.querySelector("input");
 
-searchInput.addEventListener("input", function () {
+    searchInput.addEventListener("input", function () {
 
     const query = searchInput.value.toLowerCase().trim();
 
@@ -93,3 +65,36 @@ function logout() {
     localStorage.removeItem("user");
     window.location.href = "login.html";
 }
+
+    function displayResults(results)
+    {
+        let html = `
+            <tr>
+                <th>ID</th>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Link</th>
+            </tr>
+        `;
+
+        if (!results) {
+            html += `<tr><td colspan="6"><center> No results WERE found</center></td></tr>`;
+        } else {
+            results.forEach(book => {
+                html += `
+                    <tr>
+                        <td>${book.id}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.genre}</td>
+                        <td>${book.status}</td>
+                        <td><a href="userVB.html?id=${book.id}"><font color="blue">View</font></a></td>
+                    </tr>
+                `;
+            });
+        }
+        const table = document.getElementById("booksTable");
+        table.innerHTML = html;
+    }

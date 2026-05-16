@@ -2,7 +2,9 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User   
 from django.contrib.auth import authenticate, login  
 from django.views.decorators.csrf import csrf_exempt 
-from .models import Profile                  
+from .models import Profile     
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError             
 import json              
                  
 # Create your views here.
@@ -22,6 +24,11 @@ def signup(request):
                 return JsonResponse({'error': 'passwords do not match'}, status = 400)
             if User.objects.filter(username=username).exists():
                 return JsonResponse({'error': 'this user already exsists'} , status =400)
+            
+            try:
+               validate_password(password)
+            except ValidationError as e:
+              return JsonResponse({'error': list(e.messages)}, status=400)
             
             user = User.objects.create_user(username=username,email=email,password=password)
             Profile.objects.create( user=user , is_admin=is_admin )

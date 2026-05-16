@@ -1,30 +1,53 @@
-
+function clearErrors(){
+    document.getElementById('name-error').innerText = '';
+    document.getElementById('email-error').innerText = '';
+    document.getElementById('pass-error').innerText = '';
+    document.getElementById('conf-error').innerText = '';
+    document.getElementById('general-error').innerText = '';
+}
 function valid_sign(){
-    let name=document.getElementById('name').value;
-let email=document.getElementById('email').value;
-let password=document.getElementById('pass').value;
-let conf_pass=document.getElementById('conf_pass').value;
-let admin=document.getElementById('admin').checked;
 
+ clearErrors();
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('pass').value;
+    let conf_pass = document.getElementById('conf_pass').value;
+    let admin = document.getElementById('admin').checked;
 
-    if(name==""||email==""||password==""||conf_pass==""){
-        alert("Fill the required data!");
-        return false;
+    let valid = true;
+
+    if(name == ""){
+        document.getElementById('name-error').innerText = "Username is required!";
+        valid = false;
+    }
+    if(name.includes(" ")){
+    document.getElementById('name-error').innerText = "Username cannot contain spaces!";
+    valid = false;
+  } 
+    if(email == ""){
+        document.getElementById('email-error').innerText = "Email is required!";
+        valid = false;
+    } else if(!email.includes("@")){
+        document.getElementById('email-error').innerText = "Invalid email!";
+        valid = false;
+    }
+    if(password == ""){
+        document.getElementById('pass-error').innerText = "Password is required!";
+        valid = false;
+    } if(password.length < 8){
+    document.getElementById('pass-error').innerText = "At least 8 characters!";
+    valid = false;
+}
+    if(conf_pass == ""){
+        document.getElementById('conf-error').innerText = "Please confirm your password!";
+        valid = false;
+    } else if(password != conf_pass){
+        document.getElementById('conf-error').innerText = "Passwords don't match!";
+        valid = false;
     }
 
-    else if(!email.includes("@")){
-         alert("invalid email");
-         return false; 
-    }
-     else if(password.length<6){
-        alert("password must be at least 6 characters");
-        return false;
-    }
-    else if(password!=conf_pass){
-        alert("unmatched passwords!");
-        return false;
-    }
-    
+    if(!valid) return false;
+
     
     fetch('http://127.0.0.1:8000/users/signup/', {
     method: 'POST',
@@ -41,12 +64,13 @@ let admin=document.getElementById('admin').checked;
 })
 .then(res => res.json())
 .then(data => {
-    if(data.message){
-        alert("Account created successfully!");
-       window.location.href = "login.html";
-    } else {
-        alert(data.error);
-    }
+   if(data.message){
+    alert('user created successfully');
+    window.location.href = "login.html";
+       } 
+    else {
+    document.getElementById('general-error').innerText = data.error;
+     }
 })
 return false;
       
