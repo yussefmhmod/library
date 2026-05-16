@@ -1,0 +1,12 @@
+*.pyc
+db.sqlite3
+venv/
+db.sqlite3
+.vscode/settings.json
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite
+.vs/ProjectSettings.json
+.vs/BackEndBookStore/v17/DocumentLayout.json
+.vs/BackEndBookStore/v17/.wsuo
+.vs/BackEndBookStore/FileContentIndex/691f3cd0-7e82-42b0-a146-e839d9cf7fd1.vsidx
+.vs/BackEndBookStore/CopilotIndices/17.14.1593.33849/SemanticSymbols.db

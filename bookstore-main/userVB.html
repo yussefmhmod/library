@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>View Book</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{
+    background-color:white;
+    margin:0;
+    font-family: Arial;
+}
+.book-box{
+    padding:20px;
+}
+button{
+    padding:10px 15px;
+    cursor:pointer;
+}
+</style>
+<script defer src="userVB.js"></script>
+</head>
+<body background="images/library.png">
+
+<!-- ======= Navigation ======= -->
+    <nav class="navClass" >
+        <hr>
+        <table class="navClass" width="100%">
+            <caption>navigation bar</caption>
+            <thead>
+                <tr>
+                    <td><a href="userNavBar.html"><h2>Home</h2></a></td>
+                    <td><a href="userBB.html"><h2>My Borrowed Books</h2></a></td>
+                    <td><a href="userSearch.html"><h2>Search</h2></a></td>
+                    <td><h2><span id="welcomeMsg">Welcome</span></h2></td>
+                    <td><a href="#" onclick="logout()"><h2>Sign Out</h2></a></td>
+                </tr>
+            </thead>
+        </table>
+        <hr>
+        </nav>
+       <style>.navClass {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}</style>
+<!-- ======= Logo ======= -->
+<center>
+<img src="images/BookStoreLogo3.png" width="700">
+</center>
+<!-- ======= Book Details ======= -->
+<table id="userViewBookTable" border="1" bgcolor="grey" width="100%" cellpadding="20">
+<tr>
+<td width="30%" align="center" bgcolor="darkgrey">
+    <img id="bookImage" src="" width="300">
+</td>
+<td class="book-box">
+    <h1 id="title"></h1>
+    <h3 id="author"></h3>
+    <h3 id="genre"></h3>
+    <h3 id="pages"></h3>
+    <h3 id="price"></h3>
+    <p id="description"></p>
+    <h3>Status: <span id="status"></span></h3>
+    <button id="borrowBtn" onclick="borrowBook()">Borrow Book</button>
+    <button id="returnBtn" onclick="returnBook()">Return Book</button>
+</td>
+</tr>
+</table>
+</body>
+</html>

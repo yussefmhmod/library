@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Book-Store</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<audio src="sounds/buttonclick.mp3"></audio>
+<form class="loginClass" onsubmit="return valid_log()">
+<center>
+    <br><br><br><br>
+    <h1>Login</h1> 
+        <h1 align="center">
+            <input id="em" type="text" placeholder="Username"><br><br> 
+            <input id="pas" type="password" placeholder="Password"><br><br>
+            <input id="check" type="checkbox" onclick="showpass()"> <label>Show</label>
+            <br><br> 
+        </h1>
+        <h2>
+            <button type="submit">Login</button>
+            <br><br>
+            <a href="signup.html"><font color="red">Sign Up</font></a>
+        </h2>
+</center>
+</form>
+    <script src="login.js"></script>
+    <style> body {
+        height: 100vh;
+        margin: 0;
+        background-image: url("images/entry.png");
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }</style>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>User - Borrowed Books</title>
+
+<style>
+body{
+    background-color:white;
+    margin:0;
+    font-family: Arial;
+}
+
+table{
+    text-align:center;
+    border-collapse: collapse;
+}
+
+th, td{
+    padding:10px;
+}
+</style>
+
+<script defer src="userBB.js"></script>
+</head>
+
+<body background="images/library.png">
+
+
+
+<!-- ===== Navigation ===== -->
+<nav class="navClass" >
+        <hr>
+        <table class="navClass" width="100%">
+            <caption>navigation bar</caption>
+            <thead>
+                <tr>
+                    <td><a href="userNavBar.html"><h2>Home</h2></a></td>
+                    <td><a href="userBB.html"><h2>My Borrowed Books</h2></a></td>
+                    <td><a href="userSearch.html"><h2>Search</h2></a></td>
+                    <td><h2><span id="welcomeMsg">| Welcome</span></h2></td>
+                    <td><a href="login.html" onclick="logout()"><h2>Sign Out</h2></a></td>
+                </tr>
+            </thead>
+        </table>
+        <hr>
+        </nav>
+       <style>.navClass {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}</style>
+<!-- ===== Logo ===== -->
+<center>
+    <img src="images/BookStoreLogo3.png" width="700">
+</center>
+<!-- ===== Title ===== -->
+<table border="1" bgcolor="grey" width="100%">
+    <tr>
+        <td><big>My Borrowed Books</big></td>
+    </tr>
+</table>
+
+<!-- ===== Books Table ===== -->
+<table border="1" bgcolor="white" width="100%" id="booksTable">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Borrow Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- JS fills this -->
+    </tbody>
+</table>
+
+<--History Table-->
+<table border="1" bgcolor="grey" width="100%">
+    <tr>
+        <td><big>History</big></td>
+    </tr>
+</table>
+
+<!-- ===== Books Table ===== -->
+<table border="1" bgcolor="white" width="100%" id="booksTable">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Borrow Date</th>
+            <th>Return Date</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- JS fills this -->
+    </tbody>
+</table>
+
+</body>
+</html>

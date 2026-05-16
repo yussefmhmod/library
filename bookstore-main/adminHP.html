@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book-Store</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body background="images/library.png">
+    
+    <audio src="sounds/buttonclick.mp3"></audio>
+    
+     <!-- =========navigation bar ================= -->
+
+
+
+    <nav class="navClass">
+        <hr>
+
+        <table class="navClass"  width="100%">
+            <caption> navigation bar</caption>
+
+            <thead>
+                <tr>
+                    <td><a href="adminHP.html"><h2>Home</h2></a></td>
+                    <td><a href="adminBM.html" title="click to go"><h2>Books</h2> </a> </td>
+                    <td ><a href="search.html" title="click to go"><h2>Search</h2> </a> </td>
+                    <td><a href="add.html" title="click to go"><h2>Add a Book</h2> </a> </td>
+                    <td><a href="" title="click to go"><h2>Profile</h2> </a> </td>
+                    <td><a href="login.html" title="click to go"><h2>Sign out</h2> </a> </td>
+
+                </tr>
+            </thead>
+
+        </table>
+        <hr>
+     <style> .navClass {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}</style>
+
+    </nav>
+   
+          <!-- =========Page title ================= -->
+    <div>
+
+        <center> <img src="images/BookStoreLogo3.png" alt="" width="600"></center>
+    </div>
+<!-- =========quick search ================= -->
+    <h1 align="center">
+
+            <hr>
+
+            <form action="adminHP.html" method="get">
+                <input type="text" name="query" placeholder="Quick search..." size="60">
+                <button onclick="document.getElementById('s').play()" type="submit">Search</button>
+            </form>
+
+            <hr>
+        </h1>
+    
+    
+
+
+     
+    <!--======books Div ======  -->
+    <div id = booksShelf></div>
+    <script src="scrpt.js"></script>
+</body>
+</html>

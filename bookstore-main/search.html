@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Books</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body background="images/searchBackground2.jpg">
+<audio src="sounds/buttonclick.mp3"></audio>
+<audio src="sounds/keydown.mp3"></audio>
+   <!-- =========navigation bar ================= -->
+    <nav>
+        <hr>
+
+        <table class="navClass" width="100%">
+            <caption> navigation bar</caption>
+
+            <thead>
+                <tr>
+                    <td><a href="adminHP.html"><h2>Home</h2></a></td>
+                    <td><a href="adminBB.html" title="click to go"><h2>Books</h2> </a> </td>
+                    <td ><a href="search.html" title="click to go"><h2>search</h2> </a> </td>
+                    <td><a href="add.html" title="click to go"><h2>Add a Book</h2> </a> </td>
+                    <td><a href="" title="click to go"><h2>View profile</h2> </a> </td>
+                    <td><a href="login.html" title="click to go"><h2>Sign out</h2> </a> </td>
+
+                </tr>
+            </thead>
+
+        </table>
+        <hr>
+     
+
+    </nav>
+
+  <hr>
+
+  <h2><font color="white">Search for Books</font></h2>
+
+  <form action="#">
+    <input id="inputsearch" type="text" name="query" placeholder="Search" required>
+
+    <select name="searchType" required>
+      <option value="title">Title</option>
+      <option value="author">Author</option>
+      <option value="category">Category</option>
+    </select>
+
+    <button onclick="document.getElementById('s').play()" type="submit">Search</button>
+  </form>
+
+  <hr>
+
+  <h3><font color="white">Results</font></h3>
+
+  <table id="booksTable" border="1"></table> 
+
+  <hr>
+
+  <p><font color="lightgrey">2026 Online Library Project</font></p>
+
+  <script src="search.js"></script>
+
+</body>
+</html>

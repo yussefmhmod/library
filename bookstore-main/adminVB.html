@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin - View Book</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="adminVB.js"></script>
+</head>
+
+<body background="images/library.png">
+
+
+
+     <!-- =========navigation bar ================= -->
+
+
+
+    <nav class="navClass">
+        <hr>
+
+        <table class="navClass"  width="100%">
+            <caption> navigation bar</caption>
+
+            <thead>
+                <tr>
+                    <td><a href="adminHP.html"><h2>Home</h2></a></td>
+                    <td><a href="adminBM.html" title="click to go"><h2>Books</h2> </a> </td>
+                    <td ><a href="search.html" title="click to go"><h2>s]Search</h2> </a> </td>
+                    <td><a href="add.html" title="click to go"><h2>Add a Book</h2> </a> </td>
+                    <td><a href="" title="click to go"><h2>Profile</h2> </a> </td>
+                    <td><a href="login.html" title="click to go"><h2>Sign out</h2> </a> </td>
+
+                </tr>
+            </thead>
+
+        </table>
+        <hr>
+     <style> .navClass {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}</style>
+
+    </nav>
+<!-- ===== Logo ===== -->
+<center>
+<img src="images/BookStoreLogo3.png" width="700">
+</center>
+<!-- ===== Book Details ===== -->
+<table class="book-table" bgcolor="grey">
+<tr>
+
+<td class="img-cell">
+    <img id="bookImage" src="" width="300">
+</td>
+
+<td class="book-box">
+    <h1 id="title"></h1>
+    <h3 id="author"></h3>
+    <h3 id="genre"></h3>
+    <h3 id="pages"></h3>
+    <h3 id="price"></h3>
+    <p id="description"></p>
+    <h3>Status: <span id="status"></span></h3>
+
+    <button id="toggleBtn" onclick="toggleAvailability()">Mark Unavailable</button>
+    <button class="danger" onclick="deleteBook()">Delete Book</button>
+</td>
+
+</tr>
+</table>
+
+</body>
+</html>

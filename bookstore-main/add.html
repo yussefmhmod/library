@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Book</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body background="images/addBookBackground.png">
+
+    <nav>
+        <hr>
+
+        <table class="navClass" width="100%">
+            <caption> navigation bar</caption>
+
+            <thead>
+                <tr>
+                    <td><a href="adminHP.html"><h2>Home</h2></a></td>
+                    <td><a href="adminBB.html" title="click to go"><h2>view your books</h2> </a> </td>
+                    <td ><a href="search.html" title="click to go"><h2>search</h2> </a> </td>
+                    <td><a href="add.html" title="click to go"><h2>Add a Book</h2> </a> </td>
+                    <td><a href="" title="click to go"><h2>View profile</h2> </a> </td>
+                    <td><a href="login.html" title="click to go"><h2>Sign out</h2> </a> </td>
+
+                </tr>
+            </thead>
+
+        </table>
+        <hr>
+     
+
+    </nav>
+
+  <hr>
+
+  <font color="lightgrey "><h2>Add Book to Library</h2> </font>
+  <font color="lightgrey "><p>Please enter book details below:</p> </font>
+  
+  <br>
+
+  
+<audio id="s" src="sounds/buttonclick.mp3"></audio>
+<form class="signupClass" action="" id="addForm">
+    <br>
+    
+
+
+    <input type="text" id="bname" required placeholder="Book Name">
+
+
+    <input type="text" id="bprice" required placeholder="Book Price">
+
+
+    <input type="text" id="author" required placeholder="Author Name">
+    <input type="text" id="image" placeholder="enter image path">
+
+    Category:  <br>
+    <select id="catigory" required>
+        <option value="fiction">Fiction</option>
+        <option value="science">Science</option>
+        <option value="history">History</option>
+    </select> <br><br>
+
+
+    <textarea id="desc" rows="4" cols="30" placeholder=" Description"></textarea> <br><br>
+
+    <button type="submit">Add Book</button>
+    <input type="reset" value="Clear">
+</form>
+
+
+  <br>
+   <font color="lightgrey"> <p>2026 Online Library Project</p> </font><br> 
+<script src="addjs.js"></script>
+</body>
+</html>

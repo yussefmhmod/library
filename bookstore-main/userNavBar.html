@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book-Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body background="images/library.png">
+
+   
+
+    <nav class="navClass" >
+        <hr>
+        <table class="navClass" width="100%">
+            <caption>navigation bar</caption>
+            <thead>
+                <tr>
+                    <td><a href="userNavBar.html"><h2>Home</h2></a></td>
+                    <td><a href="userBB.html"><h2>My Borrowed Books</h2></a></td>
+                    <td><a href="userSearch.html"><h2>Search</h2></a></td>
+                    <td><h2><span id="welcomeMsg"> Welcome</span></h2></td>
+                    <td><a href="#" onclick="logout()"><h2>Sign Out</h2></a></td>
+                </tr>
+            </thead>
+        </table>
+        <hr>
+        </nav>
+       <style>.navClass {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}</style>
+    
+<div>
+        <center><img src="images/BookStoreLogo3.png" alt="" width="900"></center>
+    </div> 
+    <h1 align="center">
+            <hr>
+            <form onsubmit="quickSearch(event)">
+                <input type="text" id="quickSearchInput" placeholder="Quick search..." size="60">
+                <button type="submit">Search</button>
+            </form>
+            <hr>
+        </h1>
+    <div id="booksShelf"></div>
+ 
+    <script src="userNavBar.js"></script>
+</body>
+</html>     

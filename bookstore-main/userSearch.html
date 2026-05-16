@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search Books</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body background="images/searchBackground2.jpg">
+<audio id="s" src="sounds/buttonclick.mp3"></audio>
+
+   <!-- ========= navigation bar ========= -->
+    <nav>
+        <hr>
+        <table class="navClass" width="100%">
+            <caption>navigation bar</caption>
+            <thead>
+                <tr>
+                    <td><a href="userNavBar.html"><h2>Home</h2></a></td>
+                    <td><a href="userBB.html"><h2>My Borrowed Books</h2></a></td>
+                    <td><a href="userSearch.html"><h2>Search</h2></a></td>
+                    <td><h2><span id="welcomeMsg">Welcome</span></h2></td>
+                    <td><a href="login.html" onclick="logout()"><h2>Sign Out</h2></a></td>
+                </tr>
+            </thead>
+        </table>
+        <hr>
+    </nav>
+    <style>.navClass { position: sticky; top: 0; z-index: 1000; }</style>
+
+  <hr>
+
+  <h2><font color="white">Search for Books</font></h2>
+
+  <form action="#">
+      <input id="inputsearch" type="text" name="query" placeholder="Search" required>
+
+      <select name="searchType" required>
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+          <option value="category">Category</option>
+      </select>
+
+      <button onclick="document.getElementById('s').play()" type="submit">Search</button>
+      <div id="results"></div>
+  </form>
+
+  <hr>
+
+  <h3><font color="white">Results</font></h3>
+
+  <table id="booksTable" border="1"></table>
+
+  <hr>
+
+  <p><font color="lightgrey">2026 Online Library Project</font></p>
+
+  <script src="userSearch.js"></script>
+
+</body>
+</html>
